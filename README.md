@@ -114,47 +114,73 @@ También se utiliza un catálogo geográfico de aeropuertos para asociar código
 
 ## Estructura del proyecto
 
+## Estructura del proyecto
+
 ```text
-.
-├── bronze_a_silver
-│   ├── Descompresión de archivos ZIP
-│   ├── Lectura de archivos CSV
-│   ├── Casting de tipos de datos
-│   ├── Validación de calidad
-│   ├── Eliminación de duplicados
-│   └── Persistencia de tablas Delta Silver
+
+├── Dataset/
+│   ├── flights_2025_01.zip
+│   ├── flights_2025_02.zip
+│   ├── flights_2025_03.zip
+│   ├── flights_2025_04.zip
+│   ├── flights_2025_05.zip
+│   ├── flights_2025_06.zip
+│   ├── flights_2025_07.zip
+│   ├── flights_2025_08.zip
+│   ├── flights_2025_09.zip
+│   ├── flights_2025_10.zip
+│   ├── flights_2025_11.zip
+│   ├── flights_2025_12.zip
+│   ├── flights_2026_01.zip
+│   ├── flights_2026_02.zip
+│   └── flights_2026_03.zip
 │
-├── 2_ingesta_clima
-│   ├── Identificación de aeropuertos únicos
-│   ├── Descarga de catálogo OpenFlights
-│   ├── Asociación de aeropuertos y coordenadas
-│   ├── Extracción de clima histórico
-│   └── Persistencia de tablas meteorológicas Silver
+├── Notebooks/
+│   ├── bronze_a_silver
+│   │   ├── Descompresión de archivos ZIP
+│   │   ├── Lectura de archivos CSV
+│   │   ├── Casting de tipos de datos
+│   │   ├── Validación de calidad
+│   │   ├── Eliminación de duplicados
+│   │   └── Persistencia de tablas Delta Silver
+│   │
+│   ├── 2_ingesta_clima
+│   │   ├── Identificación de aeropuertos únicos
+│   │   ├── Descarga de catálogo OpenFlights
+│   │   ├── Asociación de aeropuertos y coordenadas
+│   │   ├── Extracción de clima histórico
+│   │   └── Persistencia de tablas meteorológicas Silver
+│   │
+│   ├── 3_gold_feature_engineering
+│   │   ├── Carga de vuelos, clima y coordenadas desde Unity Catalog
+│   │   ├── Rescate de aeropuertos sin clima mediante KDTree
+│   │   ├── Join entre vuelos y variables meteorológicas
+│   │   ├── Imputación temporal de valores climáticos faltantes
+│   │   ├── Variables cíclicas de calendario y hora
+│   │   ├── Escalado de variables climáticas
+│   │   ├── Métricas de congestión aeroportuaria
+│   │   └── Creación de la tabla Gold final
+│   │
+│   └── 4_ml_classical_models
+│       ├── Auditoría y sanitización del dataset Gold
+│       ├── Muestreo balanceado por clase
+│       ├── Feature engineering adicional
+│       ├── Target encoding de rutas y aerolíneas
+│       ├── Regresión Logística
+│       ├── Random Forest
+│       ├── LightGBM
+│       ├── Multi-Layer Perceptron
+│       └── Persistencia de modelos mediante Joblib
 │
-├── 3_gold_feature_engineering
-│   ├── Carga de vuelos y clima desde Unity Catalog
-│   ├── Rescate de aeropuertos sin clima mediante KDTree
-│   ├── Join entre vuelos y clima
-│   ├── Imputación temporal forward/backward fill
-│   ├── Variables cíclicas de calendario y hora
-│   ├── Escalado de variables climáticas
-│   ├── Métricas de congestión aeroportuaria
-│   └── Creación de la tabla Gold final
+├── Reporte/
+│   └── Informe final del proyecto
 │
-├── 4_ml_classical_models
-│   ├── Auditoría del dataset Gold
-│   ├── Sanitización y validación de rangos
-│   ├── Muestreo balanceado por clase
-│   ├── Feature engineering adicional
-│   ├── Target encoding de rutas y aerolíneas
-│   ├── Random Forest
-│   ├── LightGBM
-│   ├── Multi-Layer Perceptron
-│   ├── Regresión Logística
-│   └── Persistencia de modelos con Joblib
-│
+├── .gitignore
 └── README.md
 ```
+
+La carpeta `Dataset` contiene los archivos ZIP mensuales utilizados como fuente de datos cruda. Los notebooks se ejecutan en el orden indicado en la sección de ejecución del proyecto.
+
 
 ---
 
